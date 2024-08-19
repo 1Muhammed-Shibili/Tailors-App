@@ -215,113 +215,118 @@ class _UserHomePageState extends State<UserHomePage> {
                                   ),
                                 );
                               },
-                              child: Container(
-                                height: 160,
-                                width: 360,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(35),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 16),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.network(
-                                          tailorData['profile_pic'],
-                                          width: 135,
-                                          height: 135,
-                                          fit: BoxFit.fill,
+                              child: Center(
+                                child: Container(
+                                  height: 160,
+                                  width: 360,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(35),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Image.network(
+                                            tailorData['profile_pic'],
+                                            width: 135,
+                                            height: 135,
+                                            fit: BoxFit.fill,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 25, left: 22),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            tailorData['shopName'],
-                                            style: const TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 25, left: 22),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              tailorData['shopName'],
+                                              style: const TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 5),
-                                            child: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.location_on_outlined,
-                                                  color: Colors.grey,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10),
-                                                  child: Text(
-                                                    '${tailorData['city'].split(' ').join('\n')}',
-                                                    style: const TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.grey,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 5),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.location_on_outlined,
+                                                    color: Colors.grey,
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 15),
-                                            child: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.phone_outlined,
-                                                  color: Colors.grey,
-                                                ),
-                                                const SizedBox(width: 8),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    _launchPhoneDialer(
-                                                        tailorData[
-                                                            'phoneNumber']);
-                                                  },
-                                                  child: Padding(
+                                                  const SizedBox(width: 8),
+                                                  Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            top: 5),
+                                                            top: 10),
                                                     child: Text(
-                                                      tailorData['phoneNumber'],
+                                                      '${tailorData['city'].split(' ').join('\n')}',
                                                       style: const TextStyle(
                                                         fontSize: 15,
-                                                        color: Colors.black,
+                                                        color: Colors.grey,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 15),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(
+                                                    Icons.phone_outlined,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      _launchPhoneDialer(
+                                                          tailorData[
+                                                              'phoneNumber']);
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 5),
+                                                      child: Text(
+                                                        tailorData[
+                                                            'phoneNumber'],
+                                                        style: const TextStyle(
+                                                          fontSize: 15,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                             Positioned(
                               bottom: 10,
-                              right: 10,
+                              right: 20,
                               child: GestureDetector(
                                 onTap: () async {
                                   final user = _auth.currentUser;

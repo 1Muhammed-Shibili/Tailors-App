@@ -5,7 +5,7 @@ import 'package:tailors_connect/screens/decorations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserForgotPassword extends StatefulWidget {
-  UserForgotPassword({super.key});
+  const UserForgotPassword({super.key});
 
   @override
   State<UserForgotPassword> createState() => _UserForgotPasswordState();
@@ -13,19 +13,40 @@ class UserForgotPassword extends StatefulWidget {
 
 class _UserForgotPasswordState extends State<UserForgotPassword> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool showPassword = false;
-
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  bool _isLoading = false;
 
-  Future<void> resetPassword(String email, String newPassword) async {
+  Future<void> resetPassword(String email) async {
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      print('Password reset email sent successfully.');
+      List<String> signInMethods =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+
+      if (signInMethods.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid email address.')),
+        );
+      } else {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Password reset email sent successfully.')),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => const UserEnterPinPage()),
+        );
+      }
     } catch (e) {
-      print('Error sending password reset email: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error sending password reset email: $e')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -53,25 +74,23 @@ class _UserForgotPasswordState extends State<UserForgotPassword> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(left: 90),
-                    child: Text(
-                      'Forgot Password',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
+                      padding: EdgeInsets.only(left: 90),
+                      child: Text('Forgot Password',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400))),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8, top: 35),
+                padding: const EdgeInsets.only(left: 8.0, right: 8, top: 55),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Enter e-mail address', style: forgotstyle()),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
                       TextFormField(
+                        keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         validator: validateEmailAddress,
                         decoration: const InputDecoration(
@@ -85,73 +104,24 @@ class _UserForgotPasswordState extends State<UserForgotPassword> {
                           prefixIcon: Icon(Icons.mail_outline_sharp),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Text('Enter new password', style: forgotstyle()),
-                      const SizedBox(height: 10),
-                      TextFormField(
-                        controller: newPasswordController,
-                        validator: validatePassword,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                          hintText: 'minimum 6 digits',
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: Icon(Icons.lock_outline_sharp),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text('Confrim Password', style: forgotstyle()),
-                      const SizedBox(height: 10),
-                      TextFormField(
-                        controller: confirmPasswordController,
-                        validator: validatePassword,
-                        obscureText: !showPassword,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Password',
-                          suffixIcon: IconButton(
-                            icon: Icon(showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                showPassword = !showPassword;
-                              });
-                            },
-                          ),
-                          prefixIcon: const Icon(Icons.lock_outline_sharp),
-                        ),
-                      ),
                       const SizedBox(height: 35),
                       Center(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 100, vertical: 15),
+                                  horizontal: 65, vertical: 13),
                               backgroundColor: Colors.red),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // Validation passed, proceed with password reset
                               String email = emailController.text;
-                              String newPassword = newPasswordController.text;
-
-                              resetPassword(email, newPassword);
-
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (ctx) => const UserEnterPinPage()),
-                              );
+                              resetPassword(email);
                             }
                           },
-                          child: const Text('Reset Password'),
+                          child: _isLoading
+                              ? CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text('Reset Password'),
                         ),
                       ),
                     ]),

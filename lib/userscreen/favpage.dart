@@ -19,7 +19,7 @@ class _FavouritePageState extends State<FavouritePage> {
   @override
   void initState() {
     super.initState();
-    _favoritesFuture = _loadFavorites(); // Cache future result
+    _favoritesFuture = _loadFavorites();
   }
 
   Future<List<String>> _loadFavorites() async {
@@ -79,7 +79,7 @@ class _FavouritePageState extends State<FavouritePage> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Container(); // Return empty container while waiting
+                              return Container();
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');
                             } else if (!snapshot.hasData ||

@@ -16,7 +16,7 @@ class _UserHomestate extends State<UserHome> {
   final pages = [
     const UserHomePage(),
     FavouritePage(),
-    const SentRequestsPage(),
+    //const SentRequestsPage(),
     const ProfilePage(),
   ];
 
@@ -48,10 +48,10 @@ class _UserHomestate extends State<UserHome> {
                 icon: Icon(Icons.favorite_sharp),
                 label: 'Favourite',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.send),
-                label: 'Sent Requests',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.send),
+              //   label: 'Sent Requests',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_rounded),
                 label: 'Profile',

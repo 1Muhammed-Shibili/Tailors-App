@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tailors_connect/screens/decorations.dart';
-import 'package:tailors_connect/userscreen/userhome.dart';
+//import 'package:tailors_connect/userscreen/userhome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +18,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _usernameController;
   late TextEditingController _emailController;
-  late TextEditingController _passwordController;
   bool uploadingImage = false;
   bool loadingImage = false;
   bool errorLoadingImage = false;
@@ -35,7 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
     User? user = FirebaseAuth.instance.currentUser;
     _usernameController = TextEditingController(text: user?.displayName ?? '');
     _emailController = TextEditingController(text: user?.email ?? '');
-    _passwordController = TextEditingController();
   }
 
   Future<void> _pickAndUploadImage() async {
@@ -115,9 +113,8 @@ class _ProfilePageState extends State<ProfilePage> {
         if (shopSnapshot.exists) {
           setState(() {
             _usernameController.text = shopSnapshot['username'];
-            _emailController.text = shopSnapshot['email'];
-            _passwordController.text = shopSnapshot['password'];
             imageUrl = shopSnapshot['profile_pic'];
+            loadingImage = false;
           });
         }
       }
@@ -152,20 +149,53 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: _pickAndUploadImage,
-                          child: Container(
-                            height: 170,
-                            width: 170,
-                            decoration: BoxDecoration(
-                                color: Colors.grey,
+                        Container(
+                          height: 170,
+                          width: 170,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(width: 4, color: Colors.white),
+                          ),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(
-                                    width: 4, color: const Color(0xFFfdebea))),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: _buildImageWidget(),
-                            ),
+                                child: imageUrl != null && imageUrl!.isNotEmpty
+                                    ? Image.network(
+                                        imageUrl!,
+                                        width: 170,
+                                        height: 170,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : const Center(
+                                        child: Icon(
+                                          Icons.add_a_photo,
+                                          color: Colors.white,
+                                          size: 50,
+                                        ),
+                                      ),
+                              ),
+                              Positioned(
+                                right: 0,
+                                bottom: 0,
+                                child: GestureDetector(
+                                  onTap: _pickAndUploadImage,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 2, color: Colors.white),
+                                    ),
+                                    child: const Icon(Icons.add_a_photo,
+                                        color: Colors.white, size: 20),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ]),
@@ -187,46 +217,33 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text('Email', style: customTextStyle2()),
                     const SizedBox(height: 5),
                     TextFormField(
+                        enabled: false,
                         controller: _emailController,
                         decoration: customInputDecoration('Email Address')),
-                    const SizedBox(height: 15),
-                    Text('Password', style: customTextStyle2()),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: customInputDecoration('Password')),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     Padding(
-                      padding: const EdgeInsets.only(top: 25),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Center(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 140, vertical: 15),
-                              backgroundColor: Colors.red),
-                          onPressed: () async {
-                            await UpdateFirebase(
-                              _usernameController.text,
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                  content:
-                                      Text('Profile updated successfully!')),
-                            );
-
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (ctx) => const UserHome()),
-                            );
-                          },
-                          child: const Text('Save'),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 85, vertical: 10),
+                            backgroundColor: Colors.red,
+                          ),
+                          onPressed: _saveProfileChanges,
+                          child: const Text('Save Changes'),
                         ),
                       ),
                     ),
+                    // const Padding(
+                    //   padding: EdgeInsets.only(left: 190),
+                    //   child: Text('Reset Password',
+                    //       style: TextStyle(
+                    //         fontWeight: FontWeight.w600,
+                    //         color: Colors.blue,
+                    //       )),
+                    // ),
+                    // const SizedBox(height: 10),
                   ],
                 ),
               )
@@ -240,43 +257,41 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildImageWidget() {
     if (uploadingImage) {
       return const Center(child: CircularProgressIndicator(color: Colors.blue));
-    } else if (imageUrl != null) {
-      return loadingImage
-          ? const Center(child: CircularProgressIndicator(color: Colors.blue))
-          : Image.network(
-              '$imageUrl',
-              fit: BoxFit.cover,
-            );
+    } else if (loadingImage) {
+      return const Center(child: CircularProgressIndicator(color: Colors.blue));
+    } else if (imageUrl != null && imageUrl!.isNotEmpty) {
+      return Image.network(
+        imageUrl!,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return const Center(child: Icon(Icons.error, color: Colors.red));
+        },
+      );
     } else {
       return const Center(child: Icon(Icons.add_a_photo, color: Colors.grey));
     }
   }
 
-  Future<void> UpdateFirebase(
-    String username,
-    String email,
-    String password,
-  ) async {
+  Future<void> _saveProfileChanges() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        Map<String, dynamic> updateData = {
+        final userRef =
+            FirebaseFirestore.instance.collection('users').doc(user.uid);
+        await userRef.update({
           'username': _usernameController.text,
-          'email': _emailController.text,
-          'password': _passwordController.text,
-        };
+          'profile_pic': imageUrl,
+        });
 
-        if (imageUrl != null) {
-          updateData['profile_pic'] = imageUrl;
-        }
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .update(updateData);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Profile updated successfully')),
+        );
       }
     } catch (e) {
-      print('Error updating shop details: $e');
+      print('Error updating profile: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to update profile')),
+      );
     }
   }
 }
