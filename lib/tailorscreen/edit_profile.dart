@@ -132,7 +132,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 45, left: 15),
+            padding: const EdgeInsets.only(top: 25, left: 15),
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -145,7 +145,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(top: 95),
+            padding: EdgeInsets.only(top: 75),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -160,7 +160,7 @@ class _EditProfileState extends State<EditProfile> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 150, right: 15, left: 15),
+            padding: const EdgeInsets.only(top: 100, right: 15, left: 15),
             child: Container(
               height: 700,
               width: double.infinity,
