@@ -1,16 +1,23 @@
-# tailors_connect
+# Tailors Connect 🧵📱
 
-A new Flutter project.
+**Tailors Connect** is a Flutter-based mobile application designed to bridge the gap between tailors and customers. Tailors can showcase their work, manage shop details, and connect with potential clients, while customers can explore tailors’ profiles, view their portfolios, and save favorites.
 
-## Getting Started
+## Features 🌟
 
-This project is a starting point for a Flutter application.
+### Tailor's Features
+- **Account Creation**: Tailors can sign up and log in to the app using Firebase Authentication.
+- **Shop Management**: Tailors can add their shop details, including name, description, location, and contact information.
+- **Portfolio Showcase**: Upload images of completed work to attract customers.
 
-A few resources to get you started if this is your first Flutter project:
+### Customer's Features
+- **Account Management**: Customers can sign up, log in, and update their profiles.
+- **Tailor Directory**: Browse tailor profiles, view shop details, and access contact information.
+- **Favorites Section**: Save favorite tailors for easy access later.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tech Stack 💻
+- **Frontend**: Flutter
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Backend**: Firebase (Authentication, Firestore Database, and Storage)
+
+## Screenshots 📸
+![Group 3282](https://github.com/user-attachments/assets/3f047730-9261-4228-b784-75fc9a877593)
