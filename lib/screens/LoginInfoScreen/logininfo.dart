@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/loginscreen/tailorlogin.dart';
-import 'package:tailors_connect/loginscreen/userlogin.dart';
+import 'package:tailors_connect/screens/loginscreen/tailorlogin.dart';
+import 'package:tailors_connect/screens/loginscreen/userlogin.dart';
 
 class LoginInfo extends StatelessWidget {
   const LoginInfo({super.key});

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/loginscreen/tailorlogin.dart';
-import 'package:tailors_connect/screens/decorations.dart';
+import 'package:tailors_connect/screens/loginscreen/tailorlogin.dart';
+import 'package:tailors_connect/config/decorations.dart';
 
 class TailorForgotPassword extends StatelessWidget {
   TailorForgotPassword({super.key});

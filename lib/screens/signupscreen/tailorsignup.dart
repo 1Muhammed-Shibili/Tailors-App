@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/loginscreen/tailorlogin.dart';
-import 'package:tailors_connect/loginscreen/validation.dart';
-import 'package:tailors_connect/screens/decorations.dart';
+import 'package:tailors_connect/screens/loginscreen/tailorlogin.dart';
+import 'package:tailors_connect/screens/loginscreen/validation.dart';
+import 'package:tailors_connect/config/decorations.dart';
 
 class TailorSignUpPage extends StatefulWidget {
   const TailorSignUpPage({super.key});

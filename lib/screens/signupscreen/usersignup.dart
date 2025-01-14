@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/loginscreen/userlogin.dart';
-import 'package:tailors_connect/loginscreen/validation.dart';
-import 'package:tailors_connect/screens/decorations.dart';
+import 'package:tailors_connect/screens/loginscreen/userlogin.dart';
+import 'package:tailors_connect/screens/loginscreen/validation.dart';
+import 'package:tailors_connect/config/decorations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserSignUpPage extends StatefulWidget {

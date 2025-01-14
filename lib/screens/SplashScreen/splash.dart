@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tailors_connect/screens/get_start.dart';
-import 'package:tailors_connect/screens/logininfo.dart';
-import 'package:tailors_connect/tailorscreen/tailorhome.dart';
-import 'package:tailors_connect/userscreen/userhome.dart';
+import 'package:tailors_connect/screens/StartScreen/get_start.dart';
+import 'package:tailors_connect/screens/LoginInfoScreen/logininfo.dart';
+import 'package:tailors_connect/screens/tailorscreen/tailorhome.dart';
+import 'package:tailors_connect/screens/userscreen/userhome.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/screens/logininfo.dart';
+import 'package:tailors_connect/screens/LoginInfoScreen/logininfo.dart';
 
 class GetStartPage extends StatelessWidget {
   const GetStartPage({super.key});

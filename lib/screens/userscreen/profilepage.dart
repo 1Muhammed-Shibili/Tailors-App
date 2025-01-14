@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/screens/decorations.dart';
+import 'package:tailors_connect/config/decorations.dart';
 //import 'package:tailors_connect/userscreen/userhome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

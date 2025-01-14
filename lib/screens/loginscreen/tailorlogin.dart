@@ -1,21 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tailors_connect/forgotpassword/tailorforgot.dart';
+import 'package:tailors_connect/screens/loginscreen/validation.dart';
+import 'package:tailors_connect/config/decorations.dart';
+import 'package:tailors_connect/screens/signupscreen/tailorsignup.dart';
+import 'package:tailors_connect/screens/tailorscreen/tailorhome.dart';
 
-import 'package:tailors_connect/forgotpassword/userforgot.dart';
-import 'package:tailors_connect/screens/decorations.dart';
-import 'package:tailors_connect/signupscreen/usersignup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tailors_connect/loginscreen/validation.dart';
-import 'package:tailors_connect/userscreen/userhome.dart';
-
-class UserLoginPage extends StatefulWidget {
-  const UserLoginPage({super.key});
+class TailorLoginPage extends StatefulWidget {
+  const TailorLoginPage({super.key});
 
   @override
-  State<UserLoginPage> createState() => _UserLoginPageState();
+  State<TailorLoginPage> createState() => _TailorLoginPageState();
 }
 
-class _UserLoginPageState extends State<UserLoginPage> {
+class _TailorLoginPageState extends State<TailorLoginPage> {
   bool _isPasswordVisible = false;
 
   final formkey = GlobalKey<FormState>();
@@ -24,8 +23,8 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
   @override
   void initState() {
-    _passwordController = TextEditingController();
     super.initState();
+    _passwordController = TextEditingController();
   }
 
   void _showErrorDialog(String message) {
@@ -51,11 +50,13 @@ class _UserLoginPageState extends State<UserLoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(
-            'assets/loginscreen.png',
-            fit: BoxFit.fill,
-            height: double.infinity,
+          SizedBox(
             width: double.infinity,
+            height: double.infinity,
+            child: Image.asset(
+              'assets/loginscreen.png',
+              fit: BoxFit.fill,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -118,59 +119,55 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             padding: const EdgeInsets.only(top: 17),
                             child: Form(
                               key: formkey,
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: _emailController,
-                                    keyboardType: TextInputType.emailAddress,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8)),
-                                      ),
-                                      hintText: 'Email Address',
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      prefixIcon:
-                                          Icon(Icons.mail_outline_sharp),
+                              child: Column(children: [
+                                TextFormField(
+                                  controller: _emailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
                                     ),
-                                    validator: validateEmailAddress,
+                                    hintText: 'Email Address',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    prefixIcon: Icon(Icons.mail_outline_sharp),
                                   ),
-                                  const SizedBox(
-                                    height: 7,
-                                  ),
-                                  TextFormField(
-                                    controller: _passwordController,
-                                    obscureText: !_isPasswordVisible,
-                                    keyboardType: TextInputType.visiblePassword,
-                                    decoration: InputDecoration(
-                                      border: const OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8)),
-                                      ),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      hintText: 'Password',
-                                      suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _isPasswordVisible =
-                                                  !_isPasswordVisible;
-                                            });
-                                          },
-                                          child: Icon(_isPasswordVisible
-                                              ? Icons.visibility
-                                              : Icons.visibility_off)),
-                                      prefixIcon:
-                                          const Icon(Icons.lock_outline_sharp),
+                                  validator: validateEmailAddress,
+                                ),
+                                const SizedBox(height: 6),
+                                TextFormField(
+                                  controller: _passwordController,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: !_isPasswordVisible,
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(8)),
                                     ),
-                                    validator: validatePassword,
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    hintText: 'Password',
+                                    suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            _isPasswordVisible =
+                                                !_isPasswordVisible;
+                                          });
+                                        },
+                                        child: Icon(_isPasswordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off)),
+                                    prefixIcon:
+                                        const Icon(Icons.lock_outline_sharp),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 9),
-                                    child: Row(
+                                  validator: validatePassword,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 9),
+                                  child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         GestureDetector(
@@ -178,20 +175,16 @@ class _UserLoginPageState extends State<UserLoginPage> {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (ctx) =>
-                                                      UserForgotPassword()),
+                                                      TailorForgotPassword()),
                                             );
                                           },
-                                          child: const Text(
-                                            'Forgot Password',
-                                            style:
-                                                TextStyle(color: Colors.blue),
-                                          ),
+                                          child: const Text('Forgot Password',
+                                              style: TextStyle(
+                                                  color: Colors.blue)),
                                         ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                                      ]),
+                                )
+                              ]),
                             ),
                           ),
                           Padding(
@@ -224,14 +217,14 @@ class _UserLoginPageState extends State<UserLoginPage> {
 
                                         final prefs = await SharedPreferences
                                             .getInstance();
-                                        await prefs.setInt('userType', 1);
+                                        await prefs.setInt('userType', 2);
                                         await prefs.setBool('isLoggedIn', true);
 
                                         Navigator.of(context).pop();
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (ctx) =>
-                                                  const UserHome()),
+                                                  const TailorHomePage()),
                                         );
                                       } on FirebaseAuthException catch (e) {
                                         Navigator.of(context).pop();
@@ -261,7 +254,7 @@ class _UserLoginPageState extends State<UserLoginPage> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (ctx) => const UserSignUpPage()),
+                                    builder: (ctx) => const TailorSignUpPage()),
                               );
                             },
                             child: const Row(

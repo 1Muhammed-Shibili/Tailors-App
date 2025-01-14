@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tailors_connect/screens/logininfo.dart';
-import 'package:tailors_connect/tailorscreen/edit_profile.dart';
+import 'package:tailors_connect/screens/LoginInfoScreen/logininfo.dart';
+import 'package:tailors_connect/screens/tailorscreen/edit_profile.dart';
 
 class TailorHomePage extends StatefulWidget {
   const TailorHomePage({super.key});

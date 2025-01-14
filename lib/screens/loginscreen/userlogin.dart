@@ -1,20 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tailors_connect/forgotpassword/tailorforgot.dart';
-import 'package:tailors_connect/loginscreen/validation.dart';
-import 'package:tailors_connect/screens/decorations.dart';
-import 'package:tailors_connect/signupscreen/tailorsignup.dart';
-import 'package:tailors_connect/tailorscreen/tailorhome.dart';
 
-class TailorLoginPage extends StatefulWidget {
-  const TailorLoginPage({super.key});
+import 'package:tailors_connect/forgotpassword/userforgot.dart';
+import 'package:tailors_connect/config/decorations.dart';
+import 'package:tailors_connect/screens/signupscreen/usersignup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tailors_connect/screens/loginscreen/validation.dart';
+import 'package:tailors_connect/screens/userscreen/userhome.dart';
+
+class UserLoginPage extends StatefulWidget {
+  const UserLoginPage({super.key});
 
   @override
-  State<TailorLoginPage> createState() => _TailorLoginPageState();
+  State<UserLoginPage> createState() => _UserLoginPageState();
 }
 
-class _TailorLoginPageState extends State<TailorLoginPage> {
+class _UserLoginPageState extends State<UserLoginPage> {
   bool _isPasswordVisible = false;
 
   final formkey = GlobalKey<FormState>();
@@ -23,8 +24,8 @@ class _TailorLoginPageState extends State<TailorLoginPage> {
 
   @override
   void initState() {
-    super.initState();
     _passwordController = TextEditingController();
+    super.initState();
   }
 
   void _showErrorDialog(String message) {
@@ -50,13 +51,11 @@ class _TailorLoginPageState extends State<TailorLoginPage> {
     return Scaffold(
       body: Stack(
         children: [
-          SizedBox(
-            width: double.infinity,
+          Image.asset(
+            'assets/loginscreen.png',
+            fit: BoxFit.fill,
             height: double.infinity,
-            child: Image.asset(
-              'assets/loginscreen.png',
-              fit: BoxFit.fill,
-            ),
+            width: double.infinity,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 45, left: 15),
@@ -119,55 +118,59 @@ class _TailorLoginPageState extends State<TailorLoginPage> {
                             padding: const EdgeInsets.only(top: 17),
                             child: Form(
                               key: formkey,
-                              child: Column(children: [
-                                TextFormField(
-                                  controller: _emailController,
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: const InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _emailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      ),
+                                      hintText: 'Email Address',
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      prefixIcon:
+                                          Icon(Icons.mail_outline_sharp),
                                     ),
-                                    hintText: 'Email Address',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    prefixIcon: Icon(Icons.mail_outline_sharp),
+                                    validator: validateEmailAddress,
                                   ),
-                                  validator: validateEmailAddress,
-                                ),
-                                const SizedBox(height: 6),
-                                TextFormField(
-                                  controller: _passwordController,
-                                  keyboardType: TextInputType.visiblePassword,
-                                  obscureText: !_isPasswordVisible,
-                                  decoration: InputDecoration(
-                                    border: const OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
+                                  const SizedBox(
+                                    height: 7,
+                                  ),
+                                  TextFormField(
+                                    controller: _passwordController,
+                                    obscureText: !_isPasswordVisible,
+                                    keyboardType: TextInputType.visiblePassword,
+                                    decoration: InputDecoration(
+                                      border: const OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      ),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      hintText: 'Password',
+                                      suffixIcon: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _isPasswordVisible =
+                                                  !_isPasswordVisible;
+                                            });
+                                          },
+                                          child: Icon(_isPasswordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off)),
+                                      prefixIcon:
+                                          const Icon(Icons.lock_outline_sharp),
                                     ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    hintText: 'Password',
-                                    suffixIcon: GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            _isPasswordVisible =
-                                                !_isPasswordVisible;
-                                          });
-                                        },
-                                        child: Icon(_isPasswordVisible
-                                            ? Icons.visibility
-                                            : Icons.visibility_off)),
-                                    prefixIcon:
-                                        const Icon(Icons.lock_outline_sharp),
+                                    validator: validatePassword,
                                   ),
-                                  validator: validatePassword,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 9),
-                                  child: Row(
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 9),
+                                    child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         GestureDetector(
@@ -175,16 +178,20 @@ class _TailorLoginPageState extends State<TailorLoginPage> {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (ctx) =>
-                                                      TailorForgotPassword()),
+                                                      UserForgotPassword()),
                                             );
                                           },
-                                          child: const Text('Forgot Password',
-                                              style: TextStyle(
-                                                  color: Colors.blue)),
+                                          child: const Text(
+                                            'Forgot Password',
+                                            style:
+                                                TextStyle(color: Colors.blue),
+                                          ),
                                         ),
-                                      ]),
-                                )
-                              ]),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           Padding(
@@ -217,14 +224,14 @@ class _TailorLoginPageState extends State<TailorLoginPage> {
 
                                         final prefs = await SharedPreferences
                                             .getInstance();
-                                        await prefs.setInt('userType', 2);
+                                        await prefs.setInt('userType', 1);
                                         await prefs.setBool('isLoggedIn', true);
 
                                         Navigator.of(context).pop();
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (ctx) =>
-                                                  const TailorHomePage()),
+                                                  const UserHome()),
                                         );
                                       } on FirebaseAuthException catch (e) {
                                         Navigator.of(context).pop();
@@ -254,7 +261,7 @@ class _TailorLoginPageState extends State<TailorLoginPage> {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (ctx) => const TailorSignUpPage()),
+                                    builder: (ctx) => const UserSignUpPage()),
                               );
                             },
                             child: const Row(

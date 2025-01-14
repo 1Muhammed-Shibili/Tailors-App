@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tailors_connect/userscreen/favpage.dart';
-import 'package:tailors_connect/userscreen/profilepage.dart';
-import 'package:tailors_connect/userscreen/uhomepage.dart';
+import 'package:tailors_connect/screens/userscreen/favpage.dart';
+import 'package:tailors_connect/screens/userscreen/profilepage.dart';
+import 'package:tailors_connect/screens/userscreen/uhomepage.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});

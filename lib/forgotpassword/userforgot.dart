@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tailors_connect/enter_pin/email_pin.dart';
-import 'package:tailors_connect/loginscreen/validation.dart';
-import 'package:tailors_connect/screens/decorations.dart';
+import 'package:tailors_connect/screens/loginscreen/validation.dart';
+import 'package:tailors_connect/config/decorations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserForgotPassword extends StatefulWidget {

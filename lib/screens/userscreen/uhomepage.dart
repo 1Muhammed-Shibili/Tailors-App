@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tailors_connect/screens/logininfo.dart';
-import 'package:tailors_connect/userscreen/tailordetail.dart';
+import 'package:tailors_connect/screens/LoginInfoScreen/logininfo.dart';
+import 'package:tailors_connect/screens/userscreen/tailordetail.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserHomePage extends StatefulWidget {
