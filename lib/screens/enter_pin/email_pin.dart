@@ -13,7 +13,7 @@ class UserEnterPinPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Enter PIN',
               style: TextStyle(
                 fontSize: 20,
@@ -21,16 +21,16 @@ class UserEnterPinPage extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             PinTextField(),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 // TODO: Validate and process the entered PIN
                 // You can implement the logic for verifying the entered PIN
                 // and navigating to the appropriate screen accordingly.
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         ),
@@ -54,7 +54,7 @@ class _PinTextFieldState extends State<PinTextField> {
       keyboardType: TextInputType.number,
       obscureText: true,
       textAlign: TextAlign.center,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Enter your PIN',
         filled: true,
         fillColor: Colors.white,
