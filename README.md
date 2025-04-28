@@ -20,4 +20,5 @@
 - **Backend**: Firebase (Authentication, Firestore Database, and Storage)
 
 ## Screenshots 📸
-![Group 3282](https://github.com/user-attachments/assets/3f047730-9261-4228-b784-75fc9a877593)
+![Group 3324](https://github.com/user-attachments/assets/ec57e164-d7fe-4387-83b1-fbb1e3d3b16d)
+
