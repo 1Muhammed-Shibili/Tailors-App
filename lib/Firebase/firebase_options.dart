@@ -47,7 +47,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBmdPZU2wwgqVKFgkudu5BnMkqb9-i2vpw',
+    apiKey: 'API_KEY',
     appId: '1:1093831602906:web:7b78c1b86ae8eac0a56be3',
     messagingSenderId: '1093831602906',
     projectId: 'tailorconnectapp',
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDtUgwEBVhLmodnnPWyHyEo7-qhZAEcTFs',
+    apiKey: 'API_KEY',
     appId: '1:1093831602906:android:51133de4e97a368aa56be3',
     messagingSenderId: '1093831602906',
     projectId: 'tailorconnectapp',
@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA1Wef_SlkKgdm8ARFUy0wlmAAb6V8j3iQ',
+    apiKey: 'API_KEY',
     appId: '1:1093831602906:ios:19302867f676ac06a56be3',
     messagingSenderId: '1093831602906',
     projectId: 'tailorconnectapp',
